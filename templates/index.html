@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe Goat</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            background-color: #ffefd5;
+            color: #B13D24;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 10px;
+            font-family: "Brush Script MT", cursive;
+            font-size: 72px;
+            color: #B13D24;
+        }
+        img {
+            max-width: 18.5%;
+            height: auto;
+            margin-bottom: 18px;
+        }
+        .input-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .input-container label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        #user_input {
+            color: #B13D24;
+            border: 2px solid #B13D24;
+            border-radius: 5px;
+            padding: 5px;
+            width: 225px;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+        h2 {
+            color: #B13D24;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        select, #submit_button {
+            font-family: inherit;
+            font-size: 18px;
+            color: #B13D24;
+            border: 2px solid #B13D24;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        #submit_button {
+            background-color: #B13D24;
+            color: #ffffff;
+            border: 2px solid #892E17;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 25px;
+            margin-bottom: 30px;
+        }
+        #submit_button:hover {
+            background-color: #892E17;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Recipe Goat</h1>
+        <img src="{{ url_for('static', filename='recipe-goat.png') }}" alt="Recipe Goat">
+        <div class="input-container">
+            <label for="user_input">Key Ingredient:</label>
+            <input type="text" id="user_input" name="user_input">
+        </div>
+        <div class="form-group">
+            <h2>Meal Type:</h2>
+            <select id="dropdown1" name="dropdown1">
+                <option value="">Select Meal Type</option>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Dessert">Dessert</option>
+                <option value="Snack">Snack</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <h2>Key Flavor:</h2>
+            <select id="dropdown2" name="dropdown2">
+                <option value="">Select Key Flavor</option>
+                <option value="Salty">Salty</option>
+                <option value="Sweet">Sweet</option>
+                <option value="Spicy">Spicy</option>
+                <option value="Sour">Sour</option>
+                <option value="Bitter">Bitter</option>
+            </select>
+        </div>
+        <button id="submit_button">Submit</button>
+        <div id="response"></div>
+    </div>
+    <audio id="submit-audio" src="{{ url_for('static', filename='submit-sound.mp3') }}"></audio>
+    <audio id="next-audio" src="{{ url_for('static', filename='plug.wav') }}"></audio>
+    <script>
+        function redirectToResultPage(userInput, dropdown1, dropdown2) {
+            window.location.href = `/result?user_input=${encodeURIComponent(userInput)}&dropdown1=${encodeURIComponent(dropdown1)}&dropdown2=${encodeURIComponent(dropdown2)}`;
+        }
+
+        $(document).ready(function() {
+            $('#submit_button').on('click', function() {
+                var userInput = $('#user_input').val();
+                var dropdown1 = $('#dropdown1').val();
+                var dropdown2 = $('#dropdown2').val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/auto_submit',
+                    data: {
+                        user_input: userInput,
+                        dropdown1: dropdown1,
+                        dropdown2: dropdown2
+                    },
+                    success: function() {
+                        var submitAudio = document.getElementById('submit-audio');
+                        var nextAudio = document.getElementById('next-audio');
+
+                        submitAudio.play();
+
+                        submitAudio.onended = function() {
+                            redirectToResultPage(userInput, dropdown1, dropdown2);
+                            nextAudio.play();
+                        };
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

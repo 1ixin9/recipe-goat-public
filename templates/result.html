@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 5px;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            background-color: #ffefd5;
+            color: #B13D24;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-family: "Brush Script MT", cursive;
+            font-size: 72px;
+            color: #B13D24;
+        }
+        h2 {
+            margin-bottom: 10px;
+            font-family: "Brush Script MT", cursive;
+            font-size: 40px;
+            color: #B13D24;
+        }
+        p {
+            font-size: 20px;
+            color: #B13D24;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            font-size: 20px;
+            color: #B13D24;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if name %}
+            <h1>{{ name }}</h1>
+        {% else %}
+            <h1>Your Recipe</h1>
+        {% endif %}
+        <p>{{ desc }}</p>
+        <h2>Ingredients</h2>
+        <ul>
+            {% for item in ingr.split('\n') %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Preparation</h2>
+        <ul>
+            {% for item in prep.split('\n') %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Instructions</h2>
+        <ul>
+            {% for item in inst.split('\n') %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <audio id="result-audio" src="{{ url_for('static', filename='ding.mp3') }}" autoplay></audio>
+</body>
+</html>
