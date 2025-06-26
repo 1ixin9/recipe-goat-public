@@ -45,7 +45,7 @@ Recipe Goat is composed of five main stages, each with specialized agents that c
 
 - Synthesizes all prior agent outputs to create **2 complete and context-aware recipes** featuring the chosen ingredient.
 
-### 4. 🧑Goat Board Review Stage
+### 4. Goat Board Review Stage
 
 - Evaluates the two generated recipes.
 - Selects the **best one** for final presentation using an LLM-based evaluation.
