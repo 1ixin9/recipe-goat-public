@@ -35,10 +35,10 @@ Recipe Goat is composed of five main stages, each with specialized agents that c
 
 ### 2. Culinary Expert Chef Goat Stage
 
-- **Meal Agent (if applicable):**  
+- **Meal Agent:**  
   Suggests 3 ways to use the ingredient in a given meal context.
   
-- **Flavor Agent (if applicable):**  
+- **Flavor Agent:**  
   Suggests 3 ways to highlight the ingredient's flavor.
 
 ### 3. Cooking Goat Stage
